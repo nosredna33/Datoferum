@@ -17,13 +17,13 @@ Um sistema projetado para controlar todo o ciclo de vida dos arquivos — desde 
 O `Datoferum` não é Webdav, NFS, DropBox, Google Drive, SAMBA/CIFES, SFTP, S3 ou qualquer outra Boacumba para persistir dados com seu protocolo proprietário, mas pode ser gateway para persistir ou coletar dados em qualquer uma destas tecnologias proprietárias.
 
 # Componentes e Funcionalidades:
-*HDFS + Hadoop*: Armazenamento e processamento distribuído de grandes volumes de dados.
-*HUE*: Interface amigável para gerenciamento e consulta dos dados.
-*MariaDB*: Banco de dados relacional para metadados e controle transacional.
-*Solr*: Busca avançada e indexação de documentos.
-*Keycloak*: Autenticação e autorização segura (IAM).
-*Cloud Native*: Arquitetura escalável, compatível com Kubernetes e microsserviços.
-*Command CLI*: Uso indiscriminado do `curl`, pois está pronto, portável para todas as plataformas e fala praticamente todos oso protocolos de comunicação com tecnologias de mercado.
+- *HDFS + Hadoop*: Armazenamento e processamento distribuído de grandes volumes de dados.
+- *HUE*: Interface amigável para gerenciamento e consulta dos dados.
+- *MariaDB*: Banco de dados relacional para metadados e controle transacional.
+- *Solr*: Busca avançada e indexação de documentos.
+- *Keycloak*: Autenticação e autorização segura (IAM).
+- *Cloud Native*: Arquitetura escalável, compatível com Kubernetes e microsserviços.
+- *Command CLI*: Uso indiscriminado do `curl`, pois está pronto, portável para todas as plataformas e fala praticamente todos oso protocolos de comunicação com tecnologias de mercado.
 
 
 # Fluxo do Ciclo de Vida:
