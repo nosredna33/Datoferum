@@ -15,12 +15,16 @@ Um sistema projetado para controlar todo o ciclo de vida dos arquivos — desde 
 O `Datoferum` não é Webdav, NFS, DropBox, Google Drive, SAMBA/CIFES, SFTP, S3 ou qualquer outra Boacumba para persistir dados com seu protocolo proprietário, mas pode ser gateway para persistir ou coletar dados em qualquer uma destas tecnologias proprietárias.
 
 # Componentes:
-- **HDFS + Hadoop**: Armazenamento e processamento distribuído de grandes volumes de dados.
+- **HDFS**: Armazenamento e processamento distribuído de grandes volumes de dados.
 - **HUE**: Interface amigável para gerenciamento e consulta dos dados.
 - **MariaDB**: Banco de dados relacional para metadados e controle transacional.
 - **Solr**: Busca avançada e indexação de documentos.
 - **Keycloak**: Autenticação e autorização segura (IAM).
- 
+- **Logstash**: Usado para padrozinar os logs dos componentes da pilha de software e os persistir em local seguro, inalterável e pesquisável (LGPD)
+- **Kafka**: Responsável por gestão de filas em processos de sincronização de streams e serialização de processos.
+- **Hadoop**:
+
+- 
 
 # Funcionalidades:
 - **Cloud Native**: Arquitetura escalável, compatível com Kubernetes e microsserviços.
@@ -32,7 +36,7 @@ O `Datoferum` não é Webdav, NFS, DropBox, Google Drive, SAMBA/CIFES, SFTP, S3 
 - **Classificação**: Organização automática por metadados (Solr + MariaDB).
 - **Armazenamento**: Distribuição no HDFS com políticas de redundância.
 - **Acesso**: Consulta via HUE e APIs, com segurança via Keycloak.
-- **Expurgo**: Exclusão programada ou sob demanda, com auditoria.
+- **Expurgo**: Exclusão programada ou sob de**: manda, com auditoria.
 
 # Diferenciais:
 - **Autonomia**: Elimina dependência de soluções proprietárias (Independent Movement).
