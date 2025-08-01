@@ -1,12 +1,10 @@
 # Datoferum
-*`Datoferum`*: Gubernatio Totalis Vitae Documentorum in Nube
-(Sistema Portador de Dados com Gestão Integral do Ciclo de Vida de Arquivos na Nuvem)
-
-
+> *`Datoferum`*: Gubernatio Totalis Vitae Documentorum in Nube
+> (Sistema Portador de Dados com Gestão Integral do Ciclo de Vida de Arquivos na Nuvem)
 
 # Conceito
-"Per APIs, datos, per "`Datoferum`", lacus datorum!"
-(Por meio de APIs, dados, por meio de `Datoferum`, lagos de dados!)
+> "Per APIs, datos, per `Datoferum`, lacus datorum!"
+> (Por meio de APIs, dados, por meio de `Datoferum`, lagos de dados!)
 
 ## O que é o "`Datoferum`"
 Um sistema projetado para controlar todo o ciclo de vida dos arquivos — desde a captura pós-produção até o expurgo controlado — seguindo princípios Cloud Native e Independent Movement, com rastreabilidade, totalmente baseados em sistemas abertos. Que pode ser útil para grandes ou intensas movimentaçãoes de dados segmentadas, incrementais ou comletos também, com interface web responsiva e elegante para que usuários possam acompanhar os processos envolvendo os dados da crição / Extração ào Expurgo controlado, sinalizado através de processos exôgenos por API.
@@ -16,7 +14,7 @@ Um sistema projetado para controlar todo o ciclo de vida dos arquivos — desde 
 ## O que NÃO é o "`Datoferum`"
 O `Datoferum` não é Webdav, NFS, DropBox, Google Drive, SAMBA/CIFES, SFTP, S3 ou qualquer outra Boacumba para persistir dados com seu protocolo proprietário, mas pode ser gateway para persistir ou coletar dados em qualquer uma destas tecnologias proprietárias.
 
-# Componentes e Funcionalidades:
+# Componentes e :
 - **HDFS + Hadoop**: Armazenamento e processamento distribuído de grandes volumes de dados.
 - **HUE**: Interface amigável para gerenciamento e consulta dos dados.
 - **MariaDB**: Banco de dados relacional para metadados e controle transacional.
@@ -50,7 +48,7 @@ O `Datoferum` não é Webdav, NFS, DropBox, Google Drive, SAMBA/CIFES, SFTP, S3 
 
   
 # NÃO SÃO Exemplos de Uso:
-1. **"ETL, ELT ou qualquer anagrama desse processo"** - Mas, podemos manter uma máquina de estado dos processo exôgenos indicando ao usuário o estado dos dados mantidos, de forma transiente no `Datoferum.
+1. **"ETL, ELT ou qualquer anagrama formado das letras desse processo"** - Mas, podemos manter uma máquina de estado das etapas do processo exôgenos indicando ao usuário o estado dos dados mantidos, de forma transiente no `Datoferum.
 
 2. **"Solução de Back-Up"** - Não é para isso, existem soluções mais baratas e eficiente para este propósito.
 
