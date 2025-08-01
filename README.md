@@ -14,14 +14,18 @@ Um sistema projetado para controlar todo o ciclo de vida dos arquivos — desde 
 ## O que NÃO é o "`Datoferum`"
 O `Datoferum` não é Webdav, NFS, DropBox, Google Drive, SAMBA/CIFES, SFTP, S3 ou qualquer outra Boacumba para persistir dados com seu protocolo proprietário, mas pode ser gateway para persistir ou coletar dados em qualquer uma destas tecnologias proprietárias.
 
-# Componentes e :
+# Componentes:
 - **HDFS + Hadoop**: Armazenamento e processamento distribuído de grandes volumes de dados.
 - **HUE**: Interface amigável para gerenciamento e consulta dos dados.
 - **MariaDB**: Banco de dados relacional para metadados e controle transacional.
 - **Solr**: Busca avançada e indexação de documentos.
 - **Keycloak**: Autenticação e autorização segura (IAM).
+ 
+
+# Funcionalidades:
 - **Cloud Native**: Arquitetura escalável, compatível com Kubernetes e microsserviços.
-- **Command CLI**: Uso indiscriminado do `curl`, pois está pronto, portável para todas as plataformas e fala praticamente todos oso protocolos de comunicação com tecnologias de mercado.
+- **Operável por Web Browser**: Permitindo aos usuários prezos em jaulas de segurança (acesso resteito a porta 443, com protocolo SSL/TLS) mandar e receber dados de forma segura e **NÃO** anônima.
+- **Permite automação**: Uso indiscriminado do comando de linha `curl`, pois está pronto, portável para todas as plataformas e fala praticamente todos oso protocolos de comunicação com tecnologias de mercado.
 
 # Fluxo do Ciclo de Vida:
 - **Captura**: Ingestão de arquivos após produção (ex.: dados, vídeos, logs, imagens).
@@ -66,4 +70,39 @@ Somos uma solução (um ecossistema) especializado em **`delivery da dados massi
 
 4. **"Eu tenho um datacenter no centro de São Paulo com mainframes usando storages Symmetrics e quero mover meus 21 PB para o novo datacenter em Campinas para Hardwares novos, posso usar o `Datoferum`"**? **DEVE**! Além de contratar os engenheiros desta solução para te ajudar no processo, que não é nada trivial.
 
-5. 
+------
+# Documentação técnica 
+
+## Árvore do projeto 
+<pre>
+datoferum/
+├── docker/
+│   ├── hdfs/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   ├── hadoop/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   ├── mariadb/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   ├── solr/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   ├── kafka/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   ├── hue/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   ├── keycloak/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   ├── logstash/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+├── scripts/
+│   ├── start-datoferum.sh
+├── .env
+├── README.md
+</pre>
