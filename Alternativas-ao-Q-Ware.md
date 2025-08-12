@@ -26,7 +26,8 @@ Basicamente, você está procurando algo que ofereça:
 | Segurança | TLS, autenticação por token, opção de criptografia de dados. |
 | Observação | É mais “completo” do que um WebDAV puro, mas pode ser instalado em modo reduzido para ser só armazenamento. |
 
-2. **FileRun** 
+2. **FileRun**
+
 | Característica | Descrição |
 | --- | --- |
 | Pontos fortes | Interface web leve, suporte WebDAV, open source na versão `community`. |
@@ -41,7 +42,8 @@ Basicamente, você está procurando algo que ofereça:
 | Como usar | Interface web ou curl/wget para download/upload via API. |
 | Segurança | HTTPS, autenticação token-based. |
 
-5. **Caddy + File Browser** (Algo muito minimalista)
+4. **Caddy + File Browser** (Algo muito minimalista)
+   
 > 💡 Minha recomendação pela simplicidade e segurança
 
 | Característica | Descrição |
