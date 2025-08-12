@@ -84,13 +84,17 @@ File Browser servindo os arquivos.
 Configuração mínima, mas segura.
 
 1. Estrutura de diretórios
+```text
 meu-servidor/
 ├── docker-compose.yml
 ├── Caddyfile
 └── filebrowser.db   (será gerado automaticamente)
+```
+
 2. docker-compose.yml
 version: "3.8"
 
+```yaml
 services:
   caddy:
     image: caddy:2
@@ -118,9 +122,12 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+```
+
 3. Caddyfile
 Substitua meusite.com pelo seu domínio.
 
+```json
 meusite.com {
     reverse_proxy filebrowser:80
 
@@ -130,32 +137,29 @@ meusite.com {
 
     tls seu-email@dominio.com
 }
-⚠️ Para gerar a senha em formato bcrypt (necessário no basicauth):
+```
 
+> ⚠️ Para gerar a senha em formato **bcrypt** (necessário no basicauth):
+
+```shell
 docker run --rm caddy:2 caddy hash-password --plaintext minhasenha
-Copie e cole no lugar do hash no Caddyfile.
+```
 
 4. Subir o servidor
+```shell
 docker compose up -d
-Acesse https://meusite.com no navegador → login com o usuário/senha definidos.
+```
 
-Ou use curl:
+> ⚠️ Acesse https://meusite.com no navegador → login com o usuário/senha definidos. Ou use curl:
 
+```shell
 curl -u usuario:minhasenha -k https://meusite.com/teste.txt -O
+```
+
 5. Como funciona
-O Caddy cuida do HTTPS e autenticação via basicauth.
-
-O File Browser lista, faz upload e download de arquivos.
-
-Tudo pode ser acessado tanto pelo browser quanto por curl/wget.
-
-Se você quiser, posso já deixar essa imagem multi-stage com Caddy e File Browser no mesmo container para simplificar ainda mais, sem precisar de dois serviços no docker-compose.
-Isso deixa o deploy ainda mais minimalista e portátil.
-
-Quer que eu faça nessa forma também?
+5.1. O Caddy cuida do HTTPS e autenticação via basicauth.
+5.2. O File Browser lista, faz upload e download de arquivos.
+5.3. Tudo pode ser acessado tanto pelo browser quanto por curl/wget.
 
 
 
-
-Nenhum arquivo escolhidoNenhum arquivo escolhido
-O ChatGPT pode cometer erros. Considere verificar informações importantes.
