@@ -1,28 +1,29 @@
 # Alternativas simples ao Q-Ware
 
-## Prompt
+## O problema
 Existe uma solução simples, estilo webdav, porém, totalmnte segura, open source, operavel somente via browser ou curl/wget, sobre HTTPS?
 
-## O ChatGPT disse:
+## A resposta:
 **Sim** — existem soluções estilo WebDAV, mas mais seguras, open source, e que podem ser usadas apenas via navegador ou curl/wget sobre HTTPS, sem depender de cliente dedicado.
 Basicamente, você está procurando algo que ofereça:
 
-Acesso remoto a arquivos
-Interface web simples + API HTTP/HTTPS
-Autenticação segura
-Criptografia em trânsito (TLS/HTTPS)
-Compatível com curl/wget
-Open source
-Aqui vão algumas opções bem conhecidas:
+- Acesso remoto a arquivos
+- Interface web simples + API HTTP/HTTPS
+- Autenticação segura
+- Criptografia em trânsito (TLS/HTTPS)
+- Compatível com curl/wget
+- Open source
+
+## Aqui vão algumas opções bem conhecidas:
 
 1. Nextcloud (modo mínimo)
 Pontos fortes: Open source, extremamente popular, interface web rica, acesso via WebDAV/HTTPS, autenticação robusta, pode ser configurado com apenas HTTPS e usuários básicos.
 
-Como usar no navegador: Interface web.
-
-Como usar no curl/wget: via API WebDAV ou download direto de URLs autenticadas.
-Segurança: TLS, autenticação por token, opção de criptografia de dados.
-Observação: É mais “completo” do que um WebDAV puro, mas pode ser instalado em modo reduzido para ser só armazenamento.
+> 💡 Como usar no navegador: Interface web.
+>
+> - Como usar no curl/wget: via API WebDAV ou download direto de URLs autenticadas.
+> - Segurança: TLS, autenticação por token, opção de criptografia de dados.
+> - Observação: É mais “completo” do que um WebDAV puro, mas pode ser instalado em modo reduzido para ser só armazenamento.
 
 2. FileRun
 Pontos fortes: Interface web leve, suporte WebDAV, open source na versão “community”.
