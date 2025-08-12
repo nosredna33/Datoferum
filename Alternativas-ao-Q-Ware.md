@@ -21,66 +21,47 @@ Pontos fortes: Open source, extremamente popular, interface web rica, acesso via
 Como usar no navegador: Interface web.
 
 Como usar no curl/wget: via API WebDAV ou download direto de URLs autenticadas.
-
 Segurança: TLS, autenticação por token, opção de criptografia de dados.
-
 Observação: É mais “completo” do que um WebDAV puro, mas pode ser instalado em modo reduzido para ser só armazenamento.
 
 2. FileRun
 Pontos fortes: Interface web leve, suporte WebDAV, open source na versão “community”.
-
 Como usar: URL direta para arquivos (HTTPS), suporta autenticação básica.
-
 Segurança: TLS + autenticação.
-
 Observação: Menos pesado que Nextcloud, mais próximo de um “WebDAV puro com interface web”.
 
 3. Seafile
 Pontos fortes: Open source, interface web responsiva, cliente opcional mas não obrigatório, API REST HTTP.
-
 Como usar: Interface web ou curl/wget para download/upload via API.
-
 Segurança: HTTPS, autenticação token-based.
 
-4. Caddy + File Browser
-(Se quiser algo muito minimalista)
+
+4. Caddy + File Browser (Algo muito minimalista)
 
 File Browser: um binário único (Go), interface web simples, autenticação de usuários, API HTTP.
-
 Caddy: servidor HTTPS automático com certificados Let’s Encrypt.
-
 Resultado: Você acessa pelo browser ou baixa/submete arquivos via curl/wget.
-
 Segurança: HTTPS, autenticação básica ou JWT.
 
-💡 Minha recomendação para simplicidade e segurança
+> 💡 Minha recomendação para simplicidade e segurança
+
 Se a ideia é 100% simples e seguro, sem precisar de muita configuração extra, eu iria de File Browser + Caddy:
 
 Menos de 10 MB no total.
-
 HTTPS automático.
-
 Controle de usuários.
-
 Totalmente open source.
-
 Usa HTTP puro (então curl/wget funcionam fácil).
 
 Se você quiser, eu posso montar um exemplo pronto de configuração do File Browser + Caddy para que funcione só com HTTPS e login, sem instalar mais nada no cliente. Isso vai te dar um WebDAV-like seguro e leve.
 
-Quer que eu já te monte esse exemplo agora?
+# Um exemplo Docker para o Caddy
+Um Dockerfile e um docker-compose.yml prontos para rodar Caddy + File Browser, com HTTPS automático via Let’s Encrypt, tudo open source e acessível via navegador ou curl/wget.
 
-Você disse:
-Pode criar um Docker para mim com o Caddy !
-O ChatGPT disse:
-Perfeito — vou te montar um Dockerfile e um docker-compose.yml prontos para rodar Caddy + File Browser, com HTTPS automático via Let’s Encrypt, tudo open source e acessível via navegador ou curl/wget.
-
-A ideia é:
+## A ideia é:
 
 Caddy na frente cuidando de HTTPS e autenticação.
-
 File Browser servindo os arquivos.
-
 Configuração mínima, mas segura.
 
 1. Estrutura de diretórios
