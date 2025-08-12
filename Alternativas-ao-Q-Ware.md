@@ -74,6 +74,7 @@ File Browser servindo os arquivos.
 Configuração mínima, mas segura.
 
 1. Estrutura de diretórios
+   
 ```text
 meu-servidor/
 ├── docker-compose.yml
@@ -82,9 +83,9 @@ meu-servidor/
 ```
 
 2. docker-compose.yml
-version: "3.8"
 
 ```yaml
+version: "3.8"
 services:
   caddy:
     image: caddy:2
@@ -115,6 +116,7 @@ volumes:
 ```
 
 3. Caddyfile
+   
 Substitua meusite.com pelo seu domínio.
 
 ```json
@@ -147,8 +149,11 @@ curl -u usuario:minhasenha -k https://meusite.com/teste.txt -O
 ```
 
 5. Como funciona
+   
 5.1. O Caddy cuida do HTTPS e autenticação via basicauth.
+
 5.2. O File Browser lista, faz upload e download de arquivos.
+
 5.3. Tudo pode ser acessado tanto pelo browser quanto por curl/wget.
 
 
