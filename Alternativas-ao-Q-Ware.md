@@ -16,47 +16,53 @@ Basicamente, você está procurando algo que ofereça:
 
 ## Aqui vão algumas opções bem conhecidas:
 
-1. Nextcloud (modo mínimo)
-Pontos fortes: Open source, extremamente popular, interface web rica, acesso via WebDAV/HTTPS, autenticação robusta, pode ser configurado com apenas HTTPS e usuários básicos.
+1. **Nextcloud** (modo mínimo)
 
-> 💡 Como usar no navegador: Interface web.
->
-> - Como usar no curl/wget: via API WebDAV ou download direto de URLs autenticadas.
-> - Segurança: TLS, autenticação por token, opção de criptografia de dados.
-> - Observação: É mais “completo” do que um WebDAV puro, mas pode ser instalado em modo reduzido para ser só armazenamento.
+| Característica | Descrição |
+| --- | --- |
+| Pontos fortes | Open source, extremamente popular, interface web rica, acesso via WebDAV/HTTPS, autenticação robusta, pode ser configurado com apenas HTTPS e usuários básicos. |
+| Como usar | 💡Navegador, Interface web. |
+| Como usar linha de comandos | curl/wget: via API WebDAV ou download direto de URLs autenticadas. |
+| Segurança | TLS, autenticação por token, opção de criptografia de dados. |
+| Observação | É mais “completo” do que um WebDAV puro, mas pode ser instalado em modo reduzido para ser só armazenamento. |
 
-2. FileRun
-Pontos fortes: Interface web leve, suporte WebDAV, open source na versão “community”.
-Como usar: URL direta para arquivos (HTTPS), suporta autenticação básica.
-Segurança: TLS + autenticação.
-Observação: Menos pesado que Nextcloud, mais próximo de um “WebDAV puro com interface web”.
+2. **FileRun** 
+| Característica | Descrição |
+| --- | --- |
+| Pontos fortes | Interface web leve, suporte WebDAV, open source na versão `community`. |
+| Como usar | URL direta para arquivos (HTTPS), suporta autenticação básica. |
+| Segurança | TLS + autenticação. |
+| Observação | Menos pesado que Nextcloud, mais próximo de um “WebDAV puro com interface web”. |
 
-3. Seafile
-Pontos fortes: Open source, interface web responsiva, cliente opcional mas não obrigatório, API REST HTTP.
-Como usar: Interface web ou curl/wget para download/upload via API.
-Segurança: HTTPS, autenticação token-based.
+3. **Seafile**
+| Característica | Descrição |
+| --- | --- |
+| Pontos fortes | Open source, interface web responsiva, cliente opcional mas não obrigatório, API REST HTTP. |
+| Como usar | Interface web ou curl/wget para download/upload via API. |
+| Segurança | HTTPS, autenticação token-based. |
 
+5. **Caddy + File Browser** (Algo muito minimalista)
+> 💡 Minha recomendação pela simplicidade e segurança
 
-4. Caddy + File Browser (Algo muito minimalista)
-
-File Browser: um binário único (Go), interface web simples, autenticação de usuários, API HTTP.
-Caddy: servidor HTTPS automático com certificados Let’s Encrypt.
-Resultado: Você acessa pelo browser ou baixa/submete arquivos via curl/wget.
-Segurança: HTTPS, autenticação básica ou JWT.
-
-> 💡 Minha recomendação para simplicidade e segurança
+| Característica | Descrição |
+| --- | --- |
+| File Browser | um binário único (Go), interface web simples, autenticação de usuários, API HTTP. |
+| Caddy | servidor HTTPS automático com certificados Let’s Encrypt. |
+| Resultado | Você acessa pelo browser ou baixa/submete arquivos via curl/wget. |
+| Segurança | HTTPS, autenticação básica ou JWT. |
 
 Se a ideia é 100% simples e seguro, sem precisar de muita configuração extra, eu iria de File Browser + Caddy:
 
-Menos de 10 MB no total.
-HTTPS automático.
-Controle de usuários.
-Totalmente open source.
-Usa HTTP puro (então curl/wget funcionam fácil).
-
-Se você quiser, eu posso montar um exemplo pronto de configuração do File Browser + Caddy para que funcione só com HTTPS e login, sem instalar mais nada no cliente. Isso vai te dar um WebDAV-like seguro e leve.
+- Menos de 10 MB no total.
+- HTTPS automático.
+- Controle de usuários.
+- Totalmente open source.
+- Usa HTTP puro (então curl/wget funcionam fácil).
 
 # Um exemplo Docker para o Caddy
+
+Segue um exemplo pronto de configuração do File Browser + Caddy para que funcione só com HTTPS e login, sem instalar mais nada no cliente. Isso vai te dar um WebDAV-like seguro e leve.
+
 Um Dockerfile e um docker-compose.yml prontos para rodar Caddy + File Browser, com HTTPS automático via Let’s Encrypt, tudo open source e acessível via navegador ou curl/wget.
 
 ## A ideia é:
