@@ -36,6 +36,7 @@ Basicamente, você está procurando algo que ofereça:
 | Observação | Menos pesado que Nextcloud, mais próximo de um “WebDAV puro com interface web”. |
 
 3. **Seafile**
+   
 | Característica | Descrição |
 | --- | --- |
 | Pontos fortes | Open source, interface web responsiva, cliente opcional mas não obrigatório, API REST HTTP. |
@@ -150,11 +151,11 @@ curl -u usuario:minhasenha -k https://meusite.com/teste.txt -O
 
 5. Como funciona
    
-5.1. O Caddy cuida do HTTPS e autenticação via basicauth.
+   5.1. O Caddy cuida do HTTPS e autenticação via basicauth.
 
-5.2. O File Browser lista, faz upload e download de arquivos.
+   5.2. O File Browser lista, faz upload e download de arquivos.
 
-5.3. Tudo pode ser acessado tanto pelo browser quanto por curl/wget.
+   5.3. Tudo pode ser acessado tanto pelo browser quanto por curl/wget.
 
 
 
