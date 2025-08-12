@@ -151,11 +151,30 @@ curl -u usuario:minhasenha -k https://meusite.com/teste.txt -O
 
 5. Como funciona
    
-   5.1. O Caddy cuida do HTTPS e autenticação via basicauth.
+O acesso externo ficaria assim:
 
-   5.2. O File Browser lista, faz upload e download de arquivos.
+```
+[Usuário externo via HTTPS] 
+       ↓ 
+[F5 BIG-IP na porta 443 pública]
+       ↓  (HTTP interno, ex.: porta 8080)
+[Caddy (com autenticação basicauth)]
+       ↓  (HTTP interno, porta 80)
+[File Browser]
+```
 
-   5.3. Tudo pode ser acessado tanto pelo browser quanto por curl/wget.
+💡 **Então mesmo que o File Browser não esteja “exposto” na internet**, ele continua sendo acessível externamente **por causa do encadeamento F5 → Caddy → File Browser**.
+
+---
+
+O File Browser é acessível externamente via browser ou `curl/wget`, mas **só** pela porta 443 pública:
+
+* **O F5 precisa ter um Virtual Server** apontando para o **Caddy** interno.
+* **O Caddy** é quem vai cuidar da autenticação, listagem e entrega dos arquivos.
+* O File Browser continua protegido, só atendendo requisições que chegam pelo Caddy.
+
+---
+
 
 
 
