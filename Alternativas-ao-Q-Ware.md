@@ -163,7 +163,7 @@ O acesso externo ficaria assim:
 [File Browser]
 ```
 
-💡 **Então mesmo que o File Browser não esteja “exposto” na internet**, ele continua sendo acessível externamente **por causa do encadeamento F5 → Caddy → File Browser**.
+>💡 **Então mesmo que o File Browser não esteja “exposto” na internet**, ele continua sendo acessível externamente **por causa do encadeamento F5 → Caddy → File Browser**.
 
 ---
 
