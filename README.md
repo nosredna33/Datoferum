@@ -8,7 +8,7 @@
 
 ## O "**`Datoferum`**" é...
 
-<img source="https://github.com/nosredna33/Datoferum/blob/12b6cc739335af7f1a5993f9ded423e91cd24a0f/logo-fnd-branco.png?raw=true" alt="Logo do Projeto Datoferum" style="width: 50%; height: auto; float: left; margin-right: 15px; margin-bottom: 10px;">
+<img src="https://github.com/nosredna33/Datoferum/blob/12b6cc739335af7f1a5993f9ded423e91cd24a0f/logo-fnd-branco.png?raw=true" alt="Logo do Projeto Datoferum" style="width: 50%; height: auto; float: left; margin-right: 15px; margin-bottom: 10px;">
 Um sistema projetado para controlar todo o ciclo de vida dos arquivos — desde a captura pós-produção até o expurgo controlado — seguindo princípios Cloud Native e Independent Movement, com rastreabilidade, totalmente baseados em sistemas abertos. Que pode ser útil para grandes ou intensas movimentaçãoes de dados segmentadas, incrementais ou comletos também, com interface web responsiva e elegante para que usuários possam acompanhar os processos envolvendo os dados da crição / Extração ào Expurgo controlado, sinalizado através de processos exôgenos por API.
 
 ### A Sigla
