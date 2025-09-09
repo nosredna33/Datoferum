@@ -45,6 +45,8 @@ O `Datoferum` não é Webdav, NFS, DropBox, Google Drive, SAMBA/CIFES, SFTP, S3 
 - **Acesso**: Consulta via HUE e APIs, com segurança via Keycloak.
 - **Expurgo**: Exclusão programada ou sob de**: manda, com auditoria.
 
+------
+
 # Diferenciais:
 - **Autonomia**: Elimina dependência de soluções proprietárias (Independent Movement).
 - **Rastreabilidade**: Logs detalhados do ciclo de vida de cada arquivo.
