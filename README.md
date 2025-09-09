@@ -9,6 +9,9 @@
 ## O que é o "`Datoferum`"
 Um sistema projetado para controlar todo o ciclo de vida dos arquivos — desde a captura pós-produção até o expurgo controlado — seguindo princípios Cloud Native e Independent Movement, com rastreabilidade, totalmente baseados em sistemas abertos. Que pode ser útil para grandes ou intensas movimentaçãoes de dados segmentadas, incrementais ou comletos também, com interface web responsiva e elegante para que usuários possam acompanhar os processos envolvendo os dados da crição / Extração ào Expurgo controlado, sinalizado através de processos exôgenos por API.
 
+### A Sigla
+**`DTRM`** foi a melhor escolha de abreviação para **`Datoferum`**, pois, soa moderno, forte e decisivo, como "determine" do inglês — realmente transmite a ideia de um solução que traz determinação no controle do ciclo de vida do dado, durante a inrteroperabilidade para geração de informações.
+
 **Pode ser usado com que**: arquivo a ser manuseado sejam eles: Logs, coleta de Streams para distribuioção, Grandes cargas massivas de dados, despejos controlados em Data-lakes, grandes extrações para conciliação e/ou publicações de dados, recepção de grandes volumes de IOT, despejos de billing, imagens de backups e once-data-pick-and-go distribuição de mídias e conteúdos pagos.
 
 ## O que NÃO é o "`Datoferum`"
