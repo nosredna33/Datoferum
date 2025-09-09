@@ -1,6 +1,10 @@
 # Descrição detalhada de proposta de logo
 Trata-se de um aproposta, que já foi aceita e implementada, para criação em alta resolução de um logo para o projeto **Datoferum -  (DTRM)**, que combine o nome completo com a força conceitual da sigla **DTRM**. Você pode usar este briefing para entregar a um designer ou utilizar em ferramentas de IA para gerar a imagem.
 
+## Proposta vencedora Llama 4
+
+A melhor proposta de logo, com base nesse prompt foi da IA `Llama 4`! Que depois de algumas piceladas com o GIMP, ficou a definitiva!
+
 ---
 
 ### **Proposta de Logo: Datoferum (DTRM)**
