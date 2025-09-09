@@ -3,6 +3,9 @@
 > (Sistema Portador de Dados com Gestão Integral do Ciclo de Vida de Arquivos na Nuvem)
 
 ## Conceito
+
+> O equivalente ao termo **aquífero**, relativo aos dados é **Datoferum**
+
 > "Per APIs, datos, per `Datoferum`, lacus datorum!"
 > (Por meio de APIs, dados, por meio de `Datoferum`, lagos de dados!)
 
