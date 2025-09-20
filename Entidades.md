@@ -31,6 +31,7 @@ Eis um dicionário de dados resumido, cuja a representação física deverá ser
 | **processedAt** | TIMESTAMP | Não | - | Data e hora do processamento do arquivo |
 | **status** | VARCHAR(50) | Sim | - | Estado atual do arquivo no sistema (ver lista de status abaixo) |
 | **lifeCicleHist** | TEXT | Não | - | Histórico de transições de status do arquivo |
+| **statusBitmask** | BIGINT | Não | Bitmask para rastrear o histórico de status do ciclo de vida do arquivo |
 
 ## Status Possíveis (campo status)
 
@@ -95,6 +96,7 @@ CREATE TABLE IF NOT EXISTS file_metadata (
                         'HISTORY', 'UNKNOW'
                       )),
     lifeCicleHist     TEXT,
+    statusBitmask     BIGINT DEFAULT 0,  -- Bitmask para histórico de status
     FOREIGN KEY (userId) REFERENCES users (id) ON DELETE SET NULL
 );
 
@@ -145,20 +147,59 @@ Esta tabela fornece uma estrutura completa para gerenciamento de metadados de ar
 | 0 (System User)   | PURGED           | 2025-09-07T13:00:36.765            | {"messge": "Eliminado"} |     
 | 0 (System User)   | HISTORY          | 2025-09-07T13:00:36.765            | {"messge": "Metadados para histórico"} |     
                                        
-## Análise da Estrutura
+## Análise da Proposta de Bitwise para Status
 
-### Pontos Fortes
+Foi analisado o impacto e a possilidade de implementar uma coluna com bitwise para rastrear dos status pelos quais a tupla passou. Isto é, uma radiografia sintetica do ciclo de vida do arquivo. Esta abordagem oferece vantagens significativas em termos de performance e eficiência de armazenamento, bem como um resumo sintetico de tudo que já se passou na vida do arquivo, até o status atual representado por `status` na data de `processedAt`. Um texto resumido para humanos ler fica disponível em `statusBitmask`. 
 
-- ✅ **Campos essenciais** para metadados de arquivos
-- ✅ **Controle de estado** com valores específicos para rastrear o ciclo de vida
-- ✅ **Campos de segurança** (verificação de vírus)
-- ✅ **Rastreabilidade** com datas e usuário
-- ✅ **Suporte a interoperabilidade** (checksum, mimeType)
-- ✅ **Flexibilidade** com campos para metadados adicionais e texto extraído
+```sql
 
-### Melhorias Sugeridas
+-- Tabela de mapeamento para referência
+CREATE TABLE IF NOT EXISTS status_bit_mapping (
+    status VARCHAR(50) PRIMARY KEY,
+    bit_value INTEGER UNIQUE
+);
 
-1. **Correção na constraint CHECK**: A constraint referencia "name" mas deveria ser "status"
+-- VAlores de mapeamento para referência
+INSERT INTO status_bit_mapping (status, bit_value) VALUES
+(0,         'UNAVAILEBLE'),           -- 0
+(1,         'UPLOADED'),              -- 2^0
+(2,         'PROCESSING'),            -- 2^1
+(4,         'VIRUS_SCANING'),         -- 2^2
+(8,         'VIRUS_DETECTED'),        -- 2^3
+(16,        'GETING_METADATA'),       -- 2^4
+(32,        'INDEXING'),              -- 2^5
+(64,        'INDEXED'),               -- 2^6
+(128,       'INDEXED_NO'),            -- 2^7
+(256,       'INDEX_FAILED'),          -- 2^8
+(512,       'PROCESSED'),             -- 2^9
+(1024,      'AVAILEBLE'),             -- 2^10
+(2048,      'AVAILABLE_BY_SHERE'),    -- 2^11
+(4096,      'AVAILABLE_BY_LINK_REF'), -- 2^12
+(8192,      'JOB_ATACHED'),           -- 2^13
+(16384,     'JOB_PROCESSING'),        -- 2^14
+(32768,     'JOB_REFUSED'),           -- 2^15
+(65536,     'JOB_SUCCESS'),           -- 2^16
+(131072,    'JOB_ERROR'),             -- 2^17
+(262144,    'JOB_CANCELLED'),         -- 2^18
+(524288,    'OFF_LINE'),              -- 2^19
+(1048576,   'MARK_TO_PURGE'),         -- 2^20
+(2097152,   'PURGED'),                -- 2^21
+(4194304,   'HISTORY'),               -- 2^22
+(8388608,   'UNKNOW');                -- 2^23
+```
+### Vantagens desta Abordagem
+
+1. **Simplicidade**: Operações bitwise diretas sem cálculos complexos
+2. **Performance**: Consultas mais rápidas sem necessidade de funções complexas
+3. **Legibilidade**: Valores predefinidos são mais fáceis de entender e debuggar
+4. **Manutenção**: Fácil adição de novos status sem alterar lógica existente
+5. **Eficiência**: Uma única operação OR para adicionar status ao histórico
+
+Esta implementação é realmente mais elegante e eficiente, especialmente para operações de consulta que precisam verificar múltiplos status simultaneamente.
+
+
+# Melhorias Sugeridas
+
 2. **Índices estratégicos** para melhor performance em operações de leitura
 3. **Normalização** dos campos de status poderia ser considerada para cenários complexos
 4. **Campo de origem** para identificar o sistema de origem em cenários de interoperabilidade
@@ -179,6 +220,27 @@ SELECT id, filename, fileSize, uploadedAt
 FROM file_metadata
 WHERE checksum = 'a1b2c3d4e5f67890123456789abcdef012345678'
   AND status != 'PURGED';
+```
+
+### Usando valores diretamente (mais eficiente)
+
+```sql
+UPDATE file_metadata 
+SET 
+    statusBitmask = statusBitmask | 2, -- 2 = PROCESSING
+    status = 'PROCESSING'
+WHERE id = 1;
+```
+
+### Análise da Query para multiplos status
+
+```sql
+SELECT A.*
+FROM file_metadata as A,
+     (SELECT SUM(B.bit_value) as bitsummed 
+      FROM status_bit_mapping as B
+      WHERE B.status IN ('PROCESSING', 'VIRUS_SCANING')) as C
+WHERE (A.statusBitmask & C.bitsummed) = C.bitsummed;
 ```
 
 ## Considerações para Dados Massivos
