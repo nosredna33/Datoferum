@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS status_bit_mapping (
     bit_value INTEGER UNIQUE
 );
 
--- VAlores de mapeamento para referência
+-- Valores de mapeamento para referência
 INSERT INTO status_bit_mapping (status, bit_value) VALUES
 (0,         'UNAVAILEBLE'),           -- 0
 (1,         'UPLOADED'),              -- 2^0
@@ -196,14 +196,6 @@ INSERT INTO status_bit_mapping (status, bit_value) VALUES
 5. **Eficiência**: Uma única operação OR para adicionar status ao histórico
 
 Esta implementação é realmente mais elegante e eficiente, especialmente para operações de consulta que precisam verificar múltiplos status simultaneamente.
-
-
-# Melhorias Sugeridas
-
-2. **Índices estratégicos** para melhor performance em operações de leitura
-3. **Normalização** dos campos de status poderia ser considerada para cenários complexos
-4. **Campo de origem** para identificar o sistema de origem em cenários de interoperabilidade
-
 
 ### Consulta de Arquivos Públicos
 ```sql
@@ -339,6 +331,12 @@ Sua abordagem é aproximadamente **2x mais eficiente** pois:
 2. **Arquivo de histórico**: Mova registros com status `PURGED` ou `HISTORY` para tabela de histórico
 3. **Compactação**: Considere compactar o conteúdo dos campos `contentText` e `metadata`
 4. **Limpeza regular**: Implemente processo para remover registros antigos não necessários
+
+# Melhorias Sugeridas
+
+2. **Índices estratégicos** para melhor performance em operações de leitura
+3. **Normalização** dos campos de status poderia ser considerada para cenários complexos
+4. **Campo de origem** para identificar o sistema de origem em cenários de interoperabilidade
 
 ## Notas de Implementação
 
