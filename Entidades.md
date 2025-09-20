@@ -7,34 +7,62 @@ Responsável por manter metadados sobre um arquivo mantido no ecossistema `DATOF
 #### Descrição dos Campos
 
 Eis um dicionário de dados resumido, cuja a representação física deverá ser totalmente equivalente na implementaão fíca, descrita pelo comando **`DDL SQL`** definido lo a seguir.
+# Dicionário de Dados - Tabela file_metadata
 
-| Campo | Tipo | Obrigatório | Descrição |
-|-------|------|-------------|-----------|
-| id | INTEGER | Sim | Chave primária autoincrementada |
-| filename | VARCHAR(255) | Sim | Nome do arquivo no sistema |
-| originalFilename | VARCHAR(255) | Sim | Nome original do arquivo |
-| fileType | VARCHAR(100) | Sim | Tipo/categoria do arquivo |
-| fileSize | BIGINT | Sim | Tamanho do arquivo em bytes |
-| fileExtension | VARCHAR(50) | Não | Extensão do arquivo |
-| uploadDir | VARCHAR(500) | Sim | Diretório onde o arquivo foi armazenado |
-| uploadedAt | TIMESTAMP | Sim | Data/hora do upload (default: CURRENT_TIMESTAMP) |
-| virusScanPassed | BOOLEAN | Não | Indicador se passou na verificação de vírus |
-| virusDetected | BOOLEAN | Não | Indicador se vírus foi detectado |
-| description | VARCHAR(1000) | Não | Descrição opcional do arquivo |
-| tags | VARCHAR(500) | Não | Tags para categorização |
-| mimeType | VARCHAR(500) | Não | Tipo MIME do arquivo |
-| checksum | VARCHAR(255) | Não | Checksum para verificação de integridade |
-| contentText | TEXT | Não | Texto extraído do conteúdo (para indexação) |
-| contentExtracted | BOOLEAN | Não | Indicador se o conteúdo foi extraído |
-| metadata | TEXT | Não | Metadados adicionais em formato JSON |
-| isIndexed | BOOLEAN | Não | Indicador se o arquivo foi indexado |
-| isPublic | BOOLEAN | Não | Indicador se o arquivo é público |
-| userId | INTEGER | Não | ID do usuário que fez o upload |
-| processedAt | TIMESTAMP | Não | Data/hora do processamento |
-| status | VARCHAR(50) | Sim | Estado atual do arquivo no sistema |
-| lifeCicleHist | TEXT | Não | Histórico de estados do arquivo |
+| Coluna | Tipo | Obrigatório | Valor Padrão | Descrição |
+|--------|------|-------------|--------------|-----------|
+| **id** | INTEGER | Sim | AUTOINCREMENT | Identificador único do registro (chave primária) |
+| **filename** | VARCHAR(255) | Sim | - | Nome do arquivo como armazenado no sistema |
+| **originalFilename** | VARCHAR(255) | Sim | - | Nome original do arquivo no upload |
+| **fileExtension** | VARCHAR(50) | Sim | - | Extensão do arquivo (ex: .pdf, .jpg, .docx) |
+| **contentType** | VARCHAR(500) | Não | - | Tipo MIME do conteúdo (ex: application/pdf, image/jpeg) |
+| **fileSize** | BIGINT | Sim | - | Tamanho do arquivo em bytes |
+| **fileType** | VARCHAR(100) | Não | - | Categoria/classificação do arquivo (ex: documento, imagem, vídeo) |
+| **uploadDir** | VARCHAR(500) | Não | - | Diretório onde o arquivo está armazenado |
+| **uploadedAt** | TIMESTAMP | Não | CURRENT_TIMESTAMP | Data e hora do upload do arquivo |
+| **description** | VARCHAR(1000) | Não | - | Descrição opcional do conteúdo do arquivo |
+| **tags** | VARCHAR(500) | Não | - | Palavras-chave para categorização e busca |
+| **checksum** | VARCHAR(255) | Não | - | Hash para verificação de integridade do arquivo |
+| **contentText** | TEXT | Não | - | Texto extraído do conteúdo do arquivo (para indexação) |
+| **metadata** | TEXT | Não | - | Metadados adicionais em formato JSON |
+| **isPublic** | BOOLEAN | Não | false | Indica se o arquivo é público ou de acesso restrito |
+| **isToIndex** | BOOLEAN | Não | false | Indica se o arquivo deve ser indexado para busca |
+| **userId** | INTEGER | Não | 0 | Identificador do usuário/sistema que fez o upload (0 = sistema) |
+| **processedAt** | TIMESTAMP | Não | - | Data e hora do processamento do arquivo |
+| **status** | VARCHAR(50) | Sim | - | Estado atual do arquivo no sistema (ver lista de status abaixo) |
+| **lifeCicleHist** | TEXT | Não | - | Histórico de transições de status do arquivo |
 
-#### Estrutura de dados:
+## Status Possíveis (campo status)
+
+| Status | Descrição |
+|--------|-----------|
+| UNAVAILEBLE | Arquivo indisponível para acesso |
+| UPLOADED | Upload concluído, aguardando processamento |
+| PROCESSING | Em processamento inicial |
+| VIRUS_SCANING | Em verificação de vírus/malware |
+| VIRUS_DETECTED | Vírus detectado no arquivo |
+| GETING_METADATA | Extraindo metadados do arquivo |
+| INDEXING | Em processo de indexação |
+| INDEXED | Indexação concluída com sucesso |
+| INDEXED_NO | Indexação não necessária |
+| INDEX_FAILED | Falha no processo de indexação |
+| PROCESSED | Processamento concluído |
+| AVAILEBLE | Disponível para acesso |
+| AVAILABLE_BY_SHERE | Disponível através de compartilhamento |
+| AVAILABLE_BY_LINK_REF | Disponível através de link de referência |
+| JOB_ATACHED | Associado a um job/processo |
+| JOB_PROCESSING | Job em processamento |
+| JOB_REFUSED | Job recusado/rejeitado |
+| JOB_SUCCESS | Job concluído com sucesso |
+| JOB_ERROR | Erro durante execução do job |
+| JOB_CANCELLED | Job cancelado |
+| OFF_LINE | Arquivo off-line (não disponível) |
+| MARK_TO_PURGE | Marcado para remoção/purga |
+| PURGED | Removido do sistema |
+| HISTORY | Mantido apenas para histórico |
+| UNKNOW | Status desconhecido |
+
+### Modelo Físico
 
 ```sql
 CREATE TABLE IF NOT EXISTS file_metadata (
@@ -52,43 +80,59 @@ CREATE TABLE IF NOT EXISTS file_metadata (
     checksum          VARCHAR(255),
     contentText       TEXT,
     metadata          TEXT,
-    isPublic          boolean DEFAULT false,
-    isToIndex         boolean DEFAULT false,
-    userId            INTEGER  DEFAULT 0, -- Representa o SystemID=0
+    isPublic          BOOLEAN DEFAULT false,
+    isToIndex         BOOLEAN DEFAULT false,
+    userId            INTEGER DEFAULT 0,
     processedAt       TIMESTAMP,
     status            VARCHAR(50) NOT NULL 
-                      CHECK (name IN ('UNAVAILEBLE'       , 'UPLOADED'             , 
-                                      'PROCESSING'        , 'VIRUS_SCANING'        ,
-                                      'VIRUS_DETECTED'    , 'GETING_METADATA'      ,
-                                      'INDEXING'          , 'INDEXED'              ,
-                                      'INDEXED_NO'        , 'INDEX_FAILED'         , 
-                                      'PROCESSED'         , 'AVAILEBLE'            ,
-                                      'AVAILABLE_BY_SHERE', 'AVAILABLE_BY_LINK_REF',
-                                      'JOB_ATACHED'       , 'JOB_PROCESSING'       , 
-                                      'JOB_REFUSED'       , 'JOB_SUCCESS'          ,
-                                      'JOB_ERROR'         , 'JOB_CANCELLED'        ,
-                                      'OFF_LINE'          , 'MARK_TO_PURGE'        ,
-                                      'PURGED'            , 'HISTORY'              ,
-                                      'UNKNOW'),
+                      CHECK (status IN (
+                        'UNAVAILEBLE', 'UPLOADED', 'PROCESSING', 'VIRUS_SCANING',
+                        'VIRUS_DETECTED', 'GETING_METADATA', 'INDEXING', 'INDEXED',
+                        'INDEXED_NO', 'INDEX_FAILED', 'PROCESSED', 'AVAILEBLE',
+                        'AVAILABLE_BY_SHERE', 'AVAILABLE_BY_LINK_REF', 'JOB_ATACHED',
+                        'JOB_PROCESSING', 'JOB_REFUSED', 'JOB_SUCCESS', 'JOB_ERROR',
+                        'JOB_CANCELLED', 'OFF_LINE', 'MARK_TO_PURGE', 'PURGED',
+                        'HISTORY', 'UNKNOW'
+                      )),
     lifeCicleHist     TEXT,
     FOREIGN KEY (userId) REFERENCES users (id) ON DELETE SET NULL
 );
-```
 
-#### Índices Recomendados
-
-```sql
--- Índices para melhorar performance em consultas frequentes
+-- Índices para otimização de consultas
 CREATE INDEX IF NOT EXISTS idx_file_metadata_status ON file_metadata(status);
 CREATE INDEX IF NOT EXISTS idx_file_metadata_user_id ON file_metadata(userId);
 CREATE INDEX IF NOT EXISTS idx_file_metadata_uploaded_at ON file_metadata(uploadedAt);
 CREATE INDEX IF NOT EXISTS idx_file_metadata_checksum ON file_metadata(checksum);
 CREATE INDEX IF NOT EXISTS idx_file_metadata_file_type ON file_metadata(fileType);
 CREATE INDEX IF NOT EXISTS idx_file_metadata_is_public ON file_metadata(isPublic);
+CREATE INDEX IF NOT EXISTS idx_file_metadata_is_to_index ON file_metadata(isToIndex);
 ```
+## Exemplo de Uso dos Metadados
+
+```sql
+-- Inserir um novo arquivo
+INSERT INTO file_metadata (
+  filename, originalFilename, fileExtension, contentType, 
+  fileSize, fileType, uploadDir, description, userId, status
+) VALUES (
+  'relatorio_20231025.pdf', 'Relatório Financeiro Outubro.pdf', 'pdf',
+  'application/pdf', 2048576, 'documento', '/uploads/2023/10/25',
+  'Relatório financeiro mensal - Outubro/2023', 15, 'UPLOADED'
+);
+
+-- Atualizar status após processamento
+UPDATE file_metadata 
+SET status = 'AVAILEBLE', 
+    processedAt = CURRENT_TIMESTAMP,
+    isToIndex = true
+WHERE id = 42;
+```
+
+Esta tabela fornece uma estrutura completa para gerenciamento de metadados de arquivos em um ecossistema de interoperabilidade com troca de dados massivos, permitindo rastreamento completo do ciclo de vida dos arquivos.
 
 
 #### Exemplo de dados na coluna lifeCicleHist
+
 | Quem (id usuário) | STATUS           | Quando (yyyy-mm-ddThh24:mi:ss.ccc) | Mensagem (JSON format)  |
 | ----------------- | ---------------- | ---------------------------------- | ----------------------  |
 | 1 (Admin User)    | UNAVAILEBLE      | 2025-09-05T03:45:36.345            | {"messge": "Criado"}    |
@@ -119,41 +163,6 @@ CREATE INDEX IF NOT EXISTS idx_file_metadata_is_public ON file_metadata(isPublic
 3. **Normalização** dos campos de status poderia ser considerada para cenários complexos
 4. **Campo de origem** para identificar o sistema de origem em cenários de interoperabilidade
 
-## Estados Possíveis (Campo status)
-
-| Estado | Descrição |
-|--------|-----------|
-| UPLOADED | Arquivo foi enviado mas ainda não processado |
-| PROCESSING | Em processamento inicial |
-| VIRUS_SCANING | Em verificação de vírus |
-| AVAILABLE | Disponível para uso |
-| JOB_PROCESSING | Associado a um job em processamento |
-| JOB_SUCESS | Processamento por job concluído com sucesso |
-| MARK_TO_PURGE | Marcado para remoção |
-| PURGED | Removido do sistema |
-
-## Exemplos de Uso
-
-### Inserção de Novo Arquivo
-```sql
-INSERT INTO file_metadata (
-    filename, originalFilename, fileType, fileSize, 
-    uploadDir, userId, status
-) VALUES (
-    'relatorio_202310.pdf', 'Relatório Financeiro Outubro.pdf', 
-    'PDF', 2048576, '/uploads/2023/10', 123, 'UPLOADED'
-);
-```
-
-### Atualização de Status após Processamento
-```sql
-UPDATE file_metadata 
-SET status = 'AVAILABLE', 
-    processedAt = CURRENT_TIMESTAMP,
-    virusScanPassed = true,
-    isIndexed = true
-WHERE id = 45;
-```
 
 ### Consulta de Arquivos Públicos
 ```sql
