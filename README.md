@@ -130,6 +130,9 @@ datoferum/
 │   ├── logstash/
 │   │   ├── Dockerfile
 │   │   ├── docker-compose.yml
+│   ├── NiFi/
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
 ├── scripts/
 │   ├── start-datoferum.sh
 ├── .env
